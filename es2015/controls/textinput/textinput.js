@@ -14,13 +14,13 @@ import { base, highlight, secondary } from '../styles'
 class TextInput extends React.Component {
 
   render () {
-    const { value, label, onChange, style, pattern, onSubmit } = this.props
+    const { value, label, onChange, style, pattern, onSubmit, maxLength } = this.props
 		const conditionOnChange = value => pattern.test(value) ? onChange(value) : null
 		const conditionOnSubmit = value => pattern.test(value) ? onSubmit(value) : null
 
     return <div style={{ ...base, ...style, display: 'flex' }}>
        <label>{label}</label>
-       <input type='text' value={value} style={{ ...defaultStyle }} maxLength='6'
+       <input type='text' value={value} style={{ ...defaultStyle }} maxLength={maxLength}
          onInput={evt => conditionOnChange(evt.target.value)}
          onChange={evt => conditionOnSubmit(evt.target.value)} />
      </div>
@@ -59,7 +59,12 @@ TextInput.propTypes = {
   /**
      * Optional regexp to validate user input
      */
-  pattern: PropTypes.object
+  pattern: PropTypes.object,
+
+  /**
+   * Max length
+   */
+  pattern: PropTypes.number
 
 }
 
@@ -69,7 +74,8 @@ TextInput.defaultProps = {
   label: 'Text Input',
   onChange: a => a,
   onSubmit: a => a,
-  pattern: /.*/
+  pattern: /.*/,
+  maxLength: 6
 
 }
 
